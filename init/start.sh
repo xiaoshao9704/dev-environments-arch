@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ ! -f "${HOME_BASE}/${USERNAME}/init/done" ]]
+if [[ ! -f "/init/done" ]]
 then
     # 初始化git用户
     if [[ "${GIT_NAME}" != "" && "${GIT_EMAIL}" != "" ]];
@@ -15,12 +15,7 @@ then
         cp ${GIT_RSA_PUB} ~/.ssh/id_rsa.pub
         cp ${GIT_RSA} ~/.ssh/id_rsa
     fi
-    # 自定义包安装
-    if [[ "${CUSTOM_PKG}" != "" ]];
-    then    
-        yay -S --noconfirm ${CUSTOM_PKG}
-    fi
-    touch "${HOME_BASE}/${USERNAME}/init/done"
+    touch "/init/done"
 fi
 
-sleep infinity
+exec "$@"

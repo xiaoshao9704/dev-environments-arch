@@ -2,7 +2,7 @@
 FROM archlinux:latest
 
 # 可以修改你的用户、基础home目录、初始安装的pkg
-ARG USERNAME="vscode" HOME_BASE="/home" CUSTOM_PKG="" CUSTOM_GROUPS=""
+ARG USERNAME="vscode" HOME_BASE="/home" CUSTOM_PKG=""
 # 设定后首次启动时，会用于设置git/ssh
 ENV GIT_EMAIL="" GIT_NAME="" GIT_RSA="" GIT_RSA_PUB=""
 
@@ -23,7 +23,7 @@ RUN --mount=type=cache,sharing=locked,target=/var/cache/pacman \
     # 更新仓库
     pacman -Syu --noconfirm &&\
     pacman -S --noconfirm archlinuxcn-keyring sudo base-devel inetutils openssh openssl yay zsh vim git supervisor ${CUSTOM_PKG} &&\
-    useradd -m -s /bin/zsh -b ${HOME_BASE} -G wheel,${CUSTOM_GROUPS} ${USERNAME} &&\
+    useradd -m -s /bin/zsh -b ${HOME_BASE} -G wheel ${USERNAME} &&\
     # 设置用户sudo无密码
     echo "${USERNAME} ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USERNAME} &&\
     # 设置zsh
@@ -34,7 +34,7 @@ USER ${USERNAME}
 # 移动到home目录
 WORKDIR ${HOME_BASE}/${USERNAME}
 ADD --chown=${USERNAME} ./init /init
-ADD --chown=${USERNAME} https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh /init/install.sh
+# ADD --chown=${USERNAME} https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh /init/install.sh
 # 初始化
 RUN git config --global http.version HTTP/1.1 &&\
     sh /init/install.sh --unattended &&\
