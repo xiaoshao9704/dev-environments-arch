@@ -22,7 +22,7 @@ else
         echo "set git config done"
     fi
     # SSH-KEY 配置
-    if [[ ! -d ~/.ssh && -f ${GIT_RSA} && -f ${GIT_RSA_PUB} ]];
+    if [[ ! -f  ~/.ssh/id_rsa.pub && ! -f ~/.ssh/id_rsa && -f ${GIT_RSA} && -f ${GIT_RSA_PUB} ]]
     then
         echo "set ssh key start"
         mkdir -p ~/.ssh
