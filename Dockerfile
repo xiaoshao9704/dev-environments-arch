@@ -37,14 +37,14 @@ WORKDIR ${HOME_BASE}/${USERNAME}
 # 初始化
 RUN  git config --global http.version "HTTP/1.1"
 # 安装omz
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh --http1.1)" "" --unattended
 # 通过本地安装包 安装omz
-# ADD --chown=${USERNAME} ./init/install.sh ~/omz.sh
-# RUN sh ~/omz.sh --unattended && rm ~/omz.sh
+# ADD --chown=${USERNAME} ./init/install.sh ./omz.sh
+# RUN sh ./omz.sh --unattended && rm ./omz.sh
 # zsh-autosuggestions插件
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions "\${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME_BASE}/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 # zsh-syntax-highlighting插件
-RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "\${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME_BASE}/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 # 使用插件/完成后置命令
 RUN sed -i 's/(git)/(git zsh-autosuggestions zsh-syntax-highlighting)/g' ${HOME_BASE}/${USERNAME}/.zshrc
 
