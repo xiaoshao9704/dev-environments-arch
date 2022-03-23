@@ -28,6 +28,8 @@ else
         mkdir -p ~/.ssh
         cp ${GIT_RSA_PUB} ~/.ssh/id_rsa.pub
         cp ${GIT_RSA} ~/.ssh/id_rsa 
+        chmod 600 ~/.ssh/id_rsa
+        chmod 640 ~/.ssh/id_rsa.pub
         echo "set ssh key done"
     fi
     touch "${init_dir}/done"
